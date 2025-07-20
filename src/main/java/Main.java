@@ -17,7 +17,13 @@ public class Main {
           System.out.println(e.getMessage());
           return;
         }
-        System.out.println(gson.toJson(decoded));
+
+        if (Character.isDigit(decoded.charAt(0)) || decoded.charAt(0) == '-' ){
+            System.out.println(gson.toJson(Long.parseLong(decoded)));
+        } else {
+            System.out.println(gson.toJson(decoded));
+        }
+
 
     } else {
       System.out.println("Unknown command: " + command);
@@ -36,8 +42,10 @@ public class Main {
       }
       int length = Integer.parseInt(bencodedString.substring(0, firstColonIndex));
       return bencodedString.substring(firstColonIndex+1, firstColonIndex+1+length);
+    } else if (bencodedString.charAt(0) == 'i'){
+        return bencodedString.substring(1,bencodedString.length()-1);
     } else {
-      throw new RuntimeException("Only strings are supported at the moment");
+        throw new RuntimeException("Not supported");
     }
   }
   
